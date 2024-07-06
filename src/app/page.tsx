@@ -1,7 +1,10 @@
+import Sidebar from '@/components/sidebar';
+
 export default function Home() {
   return (
-    <main>
-      <h1>Gemini</h1>
+    <main className="flex min-h-screen">
+      <Sidebar />
+      <section className="flex-1">Gemini</section>
     </main>
   );
 }
