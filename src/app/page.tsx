@@ -15,13 +15,13 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <Link
               href=""
-              className="flex gap-2 rounded-lg bg-gray-200 px-4 py-[.625rem] text-xs font-semibold hover:bg-gray-300"
+              className="flex gap-2 rounded-lg bg-gray-200 px-4 py-[.625rem] text-xs font-medium hover:bg-gray-300"
             >
               <Sparkle width={16} height={16} fill="red" color="black" />
               <span>Dùng thử Gemini Advanced</span>
             </Link>
             <div className="cursor-pointer rounded-full p-2 hover:bg-gray-200">
-              <Grip />
+              <Grip width={20} height={20} />
             </div>
             <Image
               src={'/avatar.png'}
@@ -29,7 +29,7 @@ export default function Home() {
               width={100}
               height={100}
               priority
-              className="h-10 w-10 rounded-full object-cover"
+              className="h-9 w-9 rounded-full object-cover"
             />
           </div>
         </header>
