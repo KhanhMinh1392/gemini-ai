@@ -8,7 +8,7 @@ import { VToolTip } from '../tooltip';
 export default function Sidebar() {
   const [isExpand, setIsExpand] = useState(false);
   return (
-    <nav className={cn('flex w-[4.25rem] flex-col bg-blue-100 duration-300 ease-in-out', isExpand && 'w-72')}>
+    <nav className={cn('flex w-[4.25rem] flex-col bg-blue-100 duration-500 ease-in-out', isExpand && 'w-72')}>
       <VToolTip direction="bottom" placeholder={!isExpand ? 'Mở rộng trình đơn' : 'Thu gọn trình đơn'}>
         <button
           className="ml-[.625rem] mt-3 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full hover:bg-blue-200"
@@ -21,7 +21,7 @@ export default function Sidebar() {
         <VToolTip direction="bottom" placeholder="Cuộc trò truyện mới">
           <button
             className={cn(
-              'flex h-10 w-10 cursor-pointer items-center gap-4 overflow-hidden rounded-full bg-blue-200 pl-[.625rem] duration-300 ease-in-out',
+              'flex h-10 w-10 cursor-pointer items-center gap-4 overflow-hidden rounded-full bg-blue-200 pl-[.625rem] duration-500 ease-in-out',
               isExpand && 'w-52',
             )}
           >
