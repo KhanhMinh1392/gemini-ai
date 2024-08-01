@@ -1,11 +1,14 @@
+'use client';
 import Sidebar from '@/components/sidebar';
 import { VToolTip } from '@/components/tooltip';
 import { Input } from '@/components/ui/input';
 import { ChevronDown, Compass, Grip, ImagePlus, Lightbulb, Mic, Sparkle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useChat } from 'ai/react';
 
 export default function Home() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
   return (
     <main className="flex min-h-screen">
       <Sidebar />
@@ -35,49 +38,64 @@ export default function Home() {
             />
           </div>
         </nav>
-        <article className="min-h-[calc(100vh-240px)] w-full overflow-auto px-5 pt-4">
-          <div className="mx-auto max-w-4xl">
-            <h1 className="mx-2 mt-6 inline-block bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-[3.2rem] font-medium leading-tight text-transparent">
-              Xin chào Khánh Minh!
-            </h1>
-            <h1 className="mx-2 mb-8 text-[3.2rem] font-medium leading-tight text-gray-400">
-              Hôm nay tôi có thể giúp gì cho bạn?
-            </h1>
-            <div className="mb-3 mt-16 flex items-center justify-evenly gap-2">
-              <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                <p>Thói quen trong gia đình</p>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                  <Lightbulb />
+        <article className="h-[calc(100vh-210px)] w-full overflow-y-auto px-5 pt-4">
+          {messages.length > 0 ? (
+            <div className="mx-auto max-w-4xl">
+              {messages.map((m) => (
+                <div key={m.id}>
+                  {m.role === 'user' ? 'User: ' : 'AI: '}
+                  {m.content}
                 </div>
-              </div>
-              <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                <p>Ý tưởng nhân vật cho tiểu thuyết</p>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                  <Compass />
+              ))}
+            </div>
+          ) : (
+            <div className="mx-auto max-w-4xl">
+              <h1 className="mx-2 mt-6 inline-block bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-[3.2rem] font-medium leading-tight text-transparent">
+                Xin chào Khánh Minh!
+              </h1>
+              <h1 className="mx-2 mb-8 text-[3.2rem] font-medium leading-tight text-gray-400">
+                Hôm nay tôi có thể giúp gì cho bạn?
+              </h1>
+              <div className="mb-3 mt-16 flex items-center justify-evenly gap-2">
+                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                  <p>Thói quen trong gia đình</p>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                    <Lightbulb />
+                  </div>
                 </div>
-              </div>
-              <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                <p>Các loại chế độ ăn</p>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                  <Lightbulb />
+                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                  <p>Ý tưởng nhân vật cho tiểu thuyết</p>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                    <Compass />
+                  </div>
                 </div>
-              </div>
-              <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                <p>Ý tưởng đặt tên sản phẩm</p>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                  <Compass />
+                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                  <p>Các loại chế độ ăn</p>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                    <Lightbulb />
+                  </div>
+                </div>
+                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                  <p>Ý tưởng đặt tên sản phẩm</p>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                    <Compass />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </article>
         <article>
           <div className="mx-auto mt-8 max-w-[940px]">
             <div className="relative mx-auto w-[880px] px-4">
+              <form onSubmit={handleSubmit}>
                 <Input
+                  value={input}
                   placeholder="Nhập câu lệnh tại đây"
                   className="h-16 rounded-full border-none bg-gray-100 pl-6 text-lg placeholder:text-base focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0"
+                  onChange={handleInputChange}
                 />
+              </form>
               <div className="absolute right-8 top-2">
                 <div className="flex items-center">
                   <VToolTip placeholder="Tải ảnh lên" direction="bottom" position="center">
