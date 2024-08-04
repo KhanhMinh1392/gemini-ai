@@ -2,13 +2,15 @@
 import Sidebar from '@/components/sidebar';
 import { VToolTip } from '@/components/tooltip';
 import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useChat } from 'ai/react';
 import { ChevronDown, Compass, Grip, ImagePlus, Lightbulb, Mic, Sparkle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useChat } from 'ai/react';
 
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
+
   return (
     <main className="flex min-h-screen">
       <Sidebar />
@@ -34,56 +36,73 @@ export default function Home() {
               width={100}
               height={100}
               priority
-              className="h-9 w-9 rounded-full object-cover"
+              className="size-9 rounded-full object-cover"
             />
           </div>
         </nav>
-        <article className="h-[calc(100vh-210px)] w-full overflow-y-auto px-5 pt-4">
-          {messages.length > 0 ? (
-            <div className="mx-auto max-w-4xl">
-              {messages.map((m) => (
-                <div key={m.id}>
-                  {m.role === 'user' ? 'User: ' : 'AI: '}
-                  {m.content}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="mx-auto max-w-4xl">
-              <h1 className="mx-2 mt-6 inline-block bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-[3.2rem] font-medium leading-tight text-transparent">
-                Xin chào Khánh Minh!
-              </h1>
-              <h1 className="mx-2 mb-8 text-[3.2rem] font-medium leading-tight text-gray-400">
-                Hôm nay tôi có thể giúp gì cho bạn?
-              </h1>
-              <div className="mb-3 mt-16 flex items-center justify-evenly gap-2">
-                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                  <p>Thói quen trong gia đình</p>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                    <Lightbulb />
+        <article className="mx-auto w-[800px]">
+          <ScrollArea className="h-[calc(100vh-210px)] px-5 pt-4">
+            {messages.length > 0 ? (
+              <div className="mx-auto max-w-4xl space-y-10">
+                {messages.map((m) => (
+                  <div key={m.id} className="flex items-center gap-5 text-justify">
+                    {m.role === 'user' ? (
+                      <>
+                        <Image
+                          src={'/avatar.png'}
+                          alt="avatar"
+                          width={100}
+                          height={100}
+                          priority
+                          className="size-9 rounded-full object-cover"
+                        />
+                      </>
+                    ) : (
+                      <div className="size-9">
+                        <Sparkle width={34} height={34} className="text-blue-400" fill="#60a5fa" />
+                      </div>
+                    )}
+                    {m.content}
                   </div>
-                </div>
-                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                  <p>Ý tưởng nhân vật cho tiểu thuyết</p>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                    <Compass />
+                ))}
+              </div>
+            ) : (
+              <div className="mx-auto max-w-4xl">
+                <h1 className="mx-2 mt-6 inline-block bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-[3.2rem] font-medium leading-tight text-transparent">
+                  Xin chào Khánh Minh!
+                </h1>
+                <h1 className="mx-2 mb-8 text-[3.2rem] font-medium leading-tight text-gray-400">
+                  Hôm nay tôi có thể giúp gì cho bạn?
+                </h1>
+                <div className="mb-3 mt-16 flex items-center justify-evenly gap-2">
+                  <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                    <p>Thói quen trong gia đình</p>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                      <Lightbulb />
+                    </div>
                   </div>
-                </div>
-                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                  <p>Các loại chế độ ăn</p>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                    <Lightbulb />
+                  <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                    <p>Ý tưởng nhân vật cho tiểu thuyết</p>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                      <Compass />
+                    </div>
                   </div>
-                </div>
-                <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
-                  <p>Ý tưởng đặt tên sản phẩm</p>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
-                    <Compass />
+                  <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                    <p>Các loại chế độ ăn</p>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                      <Lightbulb />
+                    </div>
+                  </div>
+                  <div className="flex h-[12.5rem] w-[12.5rem] flex-col justify-between rounded-xl bg-gray-100 p-4">
+                    <p>Ý tưởng đặt tên sản phẩm</p>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                      <Compass />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </ScrollArea>
         </article>
         <article>
           <div className="mx-auto mt-8 max-w-[940px]">
